@@ -2,13 +2,14 @@ import React, { useState,useRef } from "react";
 import { FaStar } from "react-icons/fa";
 
 function Form() {
+  
   const [hover, setHover] = useState([0, 0]);
   const [star, setStar] = useState([0, 0]);
     const formRef = useRef();
 
   const handleOtherSub = () => {
     if (formRef.current) {
-      formRef.current.requestSubmit(); // Modern way to submit the form
+      formRef.current.requestSubmit(); 
     }
   };
 
