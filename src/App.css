@@ -1,30 +1,6 @@
-
 body{
-    background-color: black !important;
-color: white !important;
+  background-color: rgb(172, 149, 111) !important;
 }
-.btn {
-  position: relative;
-  display: inline-block;
-  margin: 30px 15vw;
-  padding: 15px 30px;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  color: #29c007 !important;
-  background: yellow!important;
-  cursor: pointer;
-  transition: ease-out 0.5s;
-  border: 2px solid #725ac1;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 0 yellow;
-}
-.btn:hover {
-  color: white;
-  
-}
-
-.btn:active {
-  transform: scale(0.9);
+.back{
+  background-color: rgb(134, 122, 101) !important;
 }

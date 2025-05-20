@@ -1,141 +1,120 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { FaStar } from "react-icons/fa";
 
 function Form() {
-  const [hover, setHover] = useState(0);
-  const [star, setStar] = useState(0);
-  const [feedback, setFeedback] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [list, setList] = useState([]);
+  const [hover, setHover] = useState([0, 0]);
+  const [star, setStar] = useState([0, 0]);
+    const formRef = useRef();
 
-  const handleHover = (index) => {
-    setHover(index);
-    if (star != 0) {
-      setStar(0);
+  const handleOtherSub = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit(); // Modern way to submit the form
     }
   };
 
-  const handleLeave = (index) => {
-    setHover(0);
-    setStar(index);
+  const handleHover = (rowIndex, starIndex) => {
+    const newHover = [...hover];
+    newHover[rowIndex] = starIndex;
+    setHover(newHover);
   };
 
-  const handleDown = (index) => {
-    setStar(index);
+  const handleLeave = (rowIndex) => {
+    const newHover = [...hover];
+    newHover[rowIndex] = 0;
+    setHover(newHover);
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFeedback({ ...feedback, [name]: value });
+  const handleDown = (rowIndex, starIndex) => {
+    const newStar = [...star];
+    newStar[rowIndex] = starIndex;
+    setStar(newStar);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setList([...list, { ...feedback, star: star }]);
-    setFeedback({ name: "", email: "", message: "" });
-    setStar(0);
+   const handleSubmit = (e) => {
+    e.preventDefault(); 
+    alert("Feedback submitted successfully!");
   };
-  console.log(list);
-
   return (
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-6 mx-auto">
-            <form method="post" onSubmit={handleSubmit}>
+          <div className="col-md-4">
+            <form method="post" ref={formRef} onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control mt-2"
-                  name="name"
-                  id="name"
-                  value={feedback.name}
-                  onChange={handleChange}
-                />
+                <label htmlFor="" className="form-label">
+                  Student ID
+                </label>
+                <input type="number" name="" className="form-control" id="" />
               </div>
-
               <div className="mb-3">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  className="form-control mt-2"
-                  name="email"
-                  id="email"
-                  value={feedback.email}
-                  onChange={handleChange}
-                />
+                <label htmlFor="email" className="form-label">
+                  Student E-mail
+                </label>
+                <input type="email" name="" className="form-control" id="" />
               </div>
-
               <div className="mb-3">
-                <label>Rating:</label> <br />
-                {[...Array(5)].map((_, index) => (
-                  <FaStar
-                    key={index}
-                    onMouseOver={() => handleHover(index + 1)}
-                    onMouseLeave={() => handleLeave(index + 1)}
-                    onClick={() => handleDown(index + 1)}
-                    color={hover > index || star > index ? "gold" : "gray"}
-                    size={"20px"}
-                    style={{ cursor: "pointer" }}
-                  />
-                ))}
+                <label htmlFor="course" className="form-label">
+                  Course
+                </label>
+                <input type="text" name="" className="form-control" id="" />
               </div>
-
               <div className="mb-3">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  className="form-control mt-2"
-                  id="message"
-                  name="message"
-                  value={feedback.message}
-                  onChange={handleChange}
-                />
+                <label htmlFor="i-name" className="form-label">
+                  Instructor Name
+                </label>
+                <input type="text" name="" className="form-control" id="" />
               </div>
-              <button className="btn" type="submit">
-                Submit
-              </button>
             </form>
-           
           </div>
         </div>
         <div className="row">
-            <div className="col-md-8 mx-auto">
-                 <table className="table table-stripped">
-              <thead>
-                <tr>
-                  <th>Sr.No</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Rating</th>
-                  <th>Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                {list.map((val, index) => (
-                  // const {name,email,message}=val;
+          <div className="col-md-6">
+            <div className="mb-3">
+              <label htmlFor="feedback" className="form-label">
+                Instructor Feedback
+              </label>
+              <table className="table table-warning ">
+                <thead>
                   <tr>
-                    <td>{index + 1}</td>
-                    <td>{val.name}</td>
-                    <td>{val.email}</td>
-                    <td>
-                      {[...Array(5).keys()].map((_, index) => (
-                        <FaStar
-                          color={val.star > index ? "gold" : "gray"}
-                          size={"20px"}
-                        />
-                      ))}
-                    </td>
-                    <td>{val.message}</td>
+                    <th>Questions</th>
+                    <th>Feedback</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[
+                    "Receive syllabus & instructions at first",
+                    "Course objectives stated clearly",
+                    "Material presented in class matches syllabus",
+                    "Instructor responded questions",
+                    "Instructor demonstrates adequate knowledge of course",
+                    "Class time is used efficient",
+                    "Instructors overall teaching"
+                  ].map((question, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>{question}</td>
+                      <td>
+                        {[...Array(5)].map((_, index) => (
+                          <FaStar
+                            key={index}
+                            onMouseOver={() => handleHover(rowIndex, index + 1)}
+                            onMouseLeave={() => handleLeave(rowIndex)}
+                            onClick={() => handleDown(rowIndex, index + 1)}
+                            color={
+                              hover[rowIndex] > index || star[rowIndex] > index
+                                ? "gold"
+                                : "grey"
+                            }
+                            size={"20px"}
+                            style={{ cursor: "pointer" }}
+                          />
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
+        <button type="submit" onClick={handleOtherSub} className="  btn btn-warning">Submit</button>
       </div>
     </>
   );

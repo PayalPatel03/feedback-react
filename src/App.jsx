@@ -1,21 +1,25 @@
-import React from "react";
-import Form from "./components/Form";
+import React from 'react'
 import './App.css'
+import Form from './components/Form'
 
 function App() {
   return (
     <>
-     
-    <div className="container">
-      <div className="content mt-4">
-        <h1 className="text-center"> Your feedback matters.</h1>
-        <p className="text-center"> Please provide your feedback so that we can continue to improve.</p>
+    <div className="container back mt-2">
+      <div className="row">
+        <div className="col-md-6">
+          <h2 className='mt-5 text-white ms-5'>COURSE INSTRUCTOR <br /> FEEDBACK</h2>
+          <h5 className='ms-5 text-white'>Fill out the form with honesty</h5>
+        </div>
+        <div className="col-md-6">
+          <img height={300} src="https://www.jotform.com/uploads/ugurg/form_files/course2.63988b568a7683.62616394.png" alt="" />
+        </div>
       </div>
-
     </div>
-       <Form />
+    <Form/>
+      
     </>
-  );
+  )
 }
 
-export default App;
+export default App
